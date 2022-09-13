@@ -1,1 +1,22 @@
-
+pipeline:
+  environment:
+  parameters:
+    - "string defaultValue: '3', description: '', name: 'USERS', trim: false"
+  options:
+    - disableConcurrentBuilds()
+  agent:
+    any:
+  tools:
+    maven: "maven"
+  stages:
+    - stage: Checkout
+      steps:
+        - git 'https://github.com/saikumarbeere06/simple-java-maven-app.git'
+    - stage: Maven
+      stages:
+        - stage: Build
+          steps:
+            - sh 'mvn clean compile'
+  post:
+    always:
+      - cleanWs()
